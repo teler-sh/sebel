@@ -7,6 +7,6 @@ type Options struct {
 	DisableSSLBlacklist bool
 
 	// TODO(dwisiswant0): Add these fields
-	// DisableIPBlacklist  bool
-	// Output              io.Writer
+	// DisableHostBlacklist bool
+	// Output               io.Writer
 }
