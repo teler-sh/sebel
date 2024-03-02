@@ -2,6 +2,7 @@
 
 [![GoDoc](https://pkg.go.dev/static/frontend/badge/badge.svg)](http://pkg.go.dev/github.com/teler-sh/sebel)
 [![tests](https://github.com/teler-sh/sebel/actions/workflows/tests.yaml/badge.svg)](https://github.com/teler-sh/sebel/actions/workflows/tests.yaml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/teler-sh/sebel)](https://goreportcard.com/report/github.com/teler-sh/sebel)
 
 sebel is a Go package that provides functionality for checking SSL/TLS certificates against malicious connections, by identifying and blacklisting certificates used by botnet command and control (C&C) servers.
 
@@ -74,7 +75,14 @@ These examples demonstrate various ways to set up Sebel and integrate it with HT
 * [ ] Add `io.Writer` option.
 * [ ] Add `CheckIP` method.
 
-# License
+## Status
+
+> [!CAUTION]
+> Sebel has NOT reached 1.0 yet. Therefore, this library is currently not supported and does not offer a stable API; use at your own risk.
+
+There are no guarantees of stability for the APIs in this library, and while they are not expected to change dramatically. API tweaks and bug fixes may occur.
+
+## License
 
 `sebel` is released by [**@dwisiswant0**](https://github.com/dwisiswant0) under the Apache 2.0 license. See [LICENSE](/LICENSE).
 
