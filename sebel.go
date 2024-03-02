@@ -1,6 +1,8 @@
 package sebel
 
 import (
+	"fmt"
+
 	"crypto/tls"
 	"crypto/x509"
 	"net/http"
@@ -85,7 +87,9 @@ func (s *Sebel) checkTLS() (*sslbl.Record, error) {
 
 	record, ok = sslbl.Find(sha1sum, data)
 	if ok {
-		return record, ErrSSLBlacklist
+		reason := record.Listing.Reason
+
+		return record, fmt.Errorf("%w: %s detected", ErrSSLBlacklist, reason)
 	}
 
 	return record, nil
