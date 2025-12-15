@@ -16,10 +16,11 @@ import "github.com/teler-sh/sebel"
 // ...
 
 s := sebel.New(Options{/* ... */})
+defer s.Close() // Stop background refresh if enabled
 ```
 
 > [!NOTE]
-> The `Options` parameter is optional. Currently, the only supported option is disabling the SSL blacklist. See [TODO](#TODO).
+> The `Options` parameter is optional. See [Options](#options) for available configuration.
 
 ### Examples
 
@@ -28,6 +29,7 @@ Next, set the transport for the HTTP client you are using:
 ```go
 // initialize Sebel (fetch SSLBL data)
 s := sebel.New()
+defer s.Close()
 
 client := &http.Client{
     Transport: s.RoundTripper(http.DefaultTransport),
@@ -79,11 +81,27 @@ if err != nil && sebel.IsBlacklist(err) {
 }
 ```
 
+#### Background Refresh
+
+To keep the SSLBL data up-to-date automatically:
+
+```go
+s := sebel.New(sebel.Options{
+    DataRefreshInterval: 5 * time.Minute,
+})
+defer s.Close() // Important: stop the background goroutine
+
+client := &http.Client{
+    Transport: s.RoundTripper(http.DefaultTransport),
+}
+```
+
 These examples demonstrate various ways to set up Sebel and integrate it with HTTP clients for SSL/TLS certificate checks.
 
 ## TODO
 
-* [ ] Caching SSLBL data under user-specific cache directory.
+* [x] Caching SSLBL data under user-specific cache directory.
+* [x] Background refresh to keep data up-to-date.
 * [x] Add `io.Writer` option.
 * [ ] ~Add `CheckIP` method.~ Not planned, instead:
 * [x] Add `CheckHost` method.
