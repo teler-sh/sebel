@@ -42,3 +42,13 @@ func ExampleSebel_CheckTLS() {
 func ExampleSebel_RoundTripper() {
 	http.DefaultClient.Transport = sebel.New().RoundTripper(http.DefaultTransport)
 }
+
+func ExampleSebel_CheckHost() {
+	s := sebel.New()
+
+	_, err := s.CheckHost("c2.host", "443", nil)
+	if err != nil && sebel.IsBlacklist(err) {
+		// certificate blacklisted
+		panic(err)
+	}
+}

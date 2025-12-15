@@ -67,6 +67,18 @@ if err != nil && sebel.IsBlacklist(err) {
 }
 ```
 
+Or check a host directly using `CheckHost`:
+
+```go
+s := sebel.New()
+
+_, err := s.CheckHost("c2.host", "443", nil)
+if err != nil && sebel.IsBlacklist(err) {
+	// certificate blacklisted
+	panic(err)
+}
+```
+
 These examples demonstrate various ways to set up Sebel and integrate it with HTTP clients for SSL/TLS certificate checks.
 
 ## TODO
