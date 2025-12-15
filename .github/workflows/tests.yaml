@@ -18,13 +18,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: 'go.mod'
-          cache-dependency-path: '**/go.sum'
+      - uses: actions/checkout@v6
+      - uses: projectdiscovery/actions/setup/go@v1
       - run: go test -v -race ./...
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v4
-        with:
-          args: --timeout=5m
+      - uses: projectdiscovery/actions/golangci-lint/v2@v1
