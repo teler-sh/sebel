@@ -36,7 +36,7 @@ func (f *fingerprint) SHA1() *bytes.Buffer {
 		return &b
 	}
 
-	sha1sum := sha1.Sum(f.Certificate.Raw)
+	sha1sum := sha1.Sum(f.Raw)
 	for _, v := range sha1sum {
 		fmt.Fprintf(&b, "%02x", v)
 	}
@@ -51,7 +51,7 @@ func (f *fingerprint) SHA256() *bytes.Buffer {
 		return &b
 	}
 
-	sha256sum := sha256.Sum256(f.Certificate.Raw)
+	sha256sum := sha256.Sum256(f.Raw)
 	for _, v := range sha256sum {
 		fmt.Fprintf(&b, "%02x", v)
 	}

@@ -17,7 +17,7 @@ func ExampleNew() {
 		// certificate blacklisted
 		panic(err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	println("OK")
 }
@@ -38,7 +38,7 @@ func ExampleNew_autoRefresh() {
 	if err != nil && sebel.IsBlacklist(err) {
 		panic(err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 }
 
 func ExampleSebel_CheckTLS() {
@@ -46,7 +46,7 @@ func ExampleSebel_CheckTLS() {
 	if err != nil {
 		panic(err)
 	}
-	defer r.Body.Close()
+	defer func() { _ = r.Body.Close() }()
 
 	s := sebel.New()
 

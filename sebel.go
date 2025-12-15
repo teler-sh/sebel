@@ -73,7 +73,7 @@ func (s *Sebel) CheckHost(host, port string, config *tls.Config) (*sslbl.Record,
 	if err != nil {
 		return nil, err
 	}
-	defer conn.Close()
+	defer func() { _ = conn.Close() }()
 
 	connState := conn.ConnectionState()
 	s.tls = &connState
