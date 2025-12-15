@@ -88,9 +88,26 @@ func (s *Sebel) checkTLS() (*sslbl.Record, error) {
 	record, ok = sslbl.Find(sha1sum, data)
 	if ok {
 		reason := record.Listing.Reason
+		s.write(record, sha1sum)
 
 		return record, fmt.Errorf("%w: %s detected", ErrSSLBlacklist, reason)
 	}
 
 	return record, nil
+}
+
+// write writes the blacklist detection to the configured output writer.
+func (s *Sebel) write(record *sslbl.Record, fingerprint string) {
+	if s.options.Output == nil {
+		return
+	}
+
+	var msg string
+	if s.options.Formatter != nil {
+		msg = s.options.Formatter(record, fingerprint)
+	} else {
+		msg = fmt.Sprintf("%s: fingerprint=%q reason=%q\n", ErrSSLBlacklist, fingerprint, record.Listing.Reason)
+	}
+
+	_, _ = fmt.Fprint(s.options.Output, msg)
 }
