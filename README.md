@@ -98,14 +98,6 @@ client := &http.Client{
 
 These examples demonstrate various ways to set up Sebel and integrate it with HTTP clients for SSL/TLS certificate checks.
 
-## TODO
-
-* [x] Caching SSLBL data under user-specific cache directory.
-* [x] Background refresh to keep data up-to-date.
-* [x] Add `io.Writer` option.
-* [ ] ~Add `CheckIP` method.~ Not planned, instead:
-* [x] Add `CheckHost` method.
-
 ## Status
 
 > [!CAUTION]
