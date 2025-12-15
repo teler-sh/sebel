@@ -2,6 +2,7 @@ package sebel
 
 import (
 	"fmt"
+	"net"
 
 	"crypto/tls"
 	"crypto/x509"
@@ -45,6 +46,25 @@ func (s *Sebel) RoundTripper(rt http.RoundTripper) http.RoundTripper {
 // It returns [ErrSSLBlacklist] error if the certificate is blacklisted.
 func (s *Sebel) CheckTLS(connState *tls.ConnectionState) (*sslbl.Record, error) {
 	s.tls = connState
+
+	return s.checkTLS()
+}
+
+// CheckHost connects to the specified host, retrieves its TLS certificate,
+// and checks it against the SSLBL (SSL Blacklist).
+//
+// The config parameter allows customizing TLS behavior. Pass nil to use defaults.
+//
+// It returns [ErrSSLBlacklist] error if the certificate is blacklisted.
+func (s *Sebel) CheckHost(host, port string, config *tls.Config) (*sslbl.Record, error) {
+	conn, err := tls.Dial("tcp", net.JoinHostPort(host, port), config)
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
+
+	connState := conn.ConnectionState()
+	s.tls = &connState
 
 	return s.checkTLS()
 }
