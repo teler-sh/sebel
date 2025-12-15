@@ -72,7 +72,7 @@ These examples demonstrate various ways to set up Sebel and integrate it with HT
 ## TODO
 
 * [ ] Caching SSLBL data under user-specific cache directory.
-* [ ] Add `io.Writer` option.
+* [x] Add `io.Writer` option.
 * [ ] ~Add `CheckIP` method.~ Not planned, instead:
 * [ ] Add `CheckHost` method.
 
