@@ -31,7 +31,19 @@ func New(opt ...Options) *Sebel {
 
 	sebel.data.sslbl = sslbl.MustGet()
 
+	if sebel.options.DataRefreshInterval > 0 {
+		sslbl.StartBackgroundRefresh(sebel.options.DataRefreshInterval)
+	}
+
 	return sebel
+}
+
+// Close stops the background refresh goroutine if running.
+//
+// It is only necessary to call this if [Options].DataRefreshInterval was set.
+// Safe to call even if background refresh was not started.
+func (s *Sebel) Close() {
+	sslbl.StopBackgroundRefresh()
 }
 
 // RoundTripper creates a new RoundTripper using the provided [http.RoundTripper]
